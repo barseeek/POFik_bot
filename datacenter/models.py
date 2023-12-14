@@ -31,7 +31,7 @@ class Employee(models.Model):
     email = models.EmailField()
     mmpof_login = models.CharField(max_length=100)
     pofik_count = models.IntegerField(default=0)
-    department = models.ForeignKey('Department', on_delete=models.SET_NULL, related_name='employees', null=False, blank=True)
+    department = models.ForeignKey('Department', on_delete=models.CASCADE, related_name='employees', null=False, blank=True)
     balance = models.IntegerField(default=0)
 
     def recharge_balance(self, amount):
