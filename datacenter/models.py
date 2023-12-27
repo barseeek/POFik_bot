@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Organization(models.Model):
     name = models.CharField(max_length=100)
     head = models.OneToOneField('Employee', on_delete=models.SET_NULL, related_name='organization_head', null=True, blank=True)
@@ -7,13 +8,17 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+
 class Department(models.Model):
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     head = models.OneToOneField('Employee', on_delete=models.SET_NULL, related_name='department_head', null=True, blank=True)
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='departments')
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='departments', null=True, blank=True)
 
     def __str__(self):
         return self.name
+
 
 class Bonus(models.Model):
     name = models.CharField(max_length=100)
